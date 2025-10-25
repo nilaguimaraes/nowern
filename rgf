@@ -1,0 +1,27 @@
+import { useMiniKit } from "@coinbase/onchainkit/minikit";
+
+export default function App() {
+  const { context } = useMiniKit();
+
+  // Verified user information (always available)
+  const userFid = context?.user?.fid;
+  
+  // Additional user data (when available)
+  const username = context?.user?.username;
+  const displayName = context?.user?.displayName;
+  const pfpUrl = context?.user?.pfpUrl;
+
+  // Client information
+  const isAdded = context?.client?.added; // Whether user has added this Mini App
+  const location = context?.location; // Where the Mini App was launched from
+
+  return (
+    <div className="mini-app">
+      <h1>Welcome{displayName ? `, ${displayName}` : ''}!</h1>
+      <p>Your FID: {userFid}</p>
+      {username && <p>Username: @{username}</p>}
+      {isAdded && <p>✅ You've added this Mini App</p>}
+      {location && <p>Launched from: {location}</p>}
+    </div>
+  );
+}
